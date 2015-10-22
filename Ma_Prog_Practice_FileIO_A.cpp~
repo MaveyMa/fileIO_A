@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream> //ALLOWS YOU TO READ AND WRITE TO FILES
 #include <cstdlib>
+#include <cctype> //toupper()
 using namespace std;
 
 int main()
@@ -35,10 +36,21 @@ int main()
         cout << "ERROR OPENING INPUT FILE.\n";
         exit(1);
     }
+    if (foutCap.fail())
+    {
+        cout << "ERROR OPENING INPUT FILE.\n";
+        exit(1);
+    }
+    if (foutUp.fail())
+    {
+        cout << "ERROR OPENING INPUT FILE.\n";
+        exit(1);
+    }
     
     //LET'S READ IN THE gba.txt FILE WORD BY WORD
     while (fin >> word)
     {
+        string copyWord = word;
         //1 DETERMINES THE AVERAGE NUMBER OF CHARACTERS PER WORD
         count++; //3 TOTAL NUMBER OF WORDS
         sum += word.length(); //TOTAL NUMBER OF CHARACTERS 
@@ -98,18 +110,8 @@ int main()
         foutCap << " ";
         
         //5 UPPERCASE FIRST LETTER OF EACH WORD IN  gba.txt
-        for (int ix = 0; ix < word.length(); ix++)
-        {
-            if (word[0] >= 'a' && word[0] <= 'z')
-            {
-                word[0] -= 32;
-                foutUp << word[0];
-            }
-            else
-            {
-                foutUp << word[ix];
-            }
-        }//END FOR LOOP
+        char firstLetter = toupper(copyWord[0]);
+        foutUp << firstLetter << copyWord.substr(1);
         //5 INCLUDE SPACES BETWEEN EACH CAPITALIZED WORD
         //WRITE TO uppercase.txt
         foutUp << " ";
@@ -139,4 +141,4 @@ int main()
     foutCap.close();
     foutUp.close();
     return 0;
-}
+}//END INT MAIN
